@@ -90,7 +90,6 @@ def eval_variable(v):
         return variable_dict[v]
 
 
-
 calc1 = ['calc', ["set", "res", 5], ['print', 2], ['print', [4, "+", [2, "*", 2]]], ["print", "res"]]
-calc2 = ['calc', ['if', [[3, "+", 2], '<', 5], ['print', 2], ['print', 4]]]
+calc2 = ['calc', ['if', [[3, "+", 2], '=', 5], ["set", "a", 5], ["print", 2]], ["print", "a"]]
 exec_program(calc2)
