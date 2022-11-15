@@ -117,7 +117,7 @@ def eval_constant(expr, table):
 def eval_variable(expr, table):
     """ Returnerar variabelns värde i table """
     return table[expr]
-
+    
 # if __name__ == "__main__":
 #     #Egna testexempel:
 
