@@ -92,24 +92,38 @@ def exec_output(o, table):
     return table
 
 
+# def eval_condition(statement, table):
+#     cond = selection_condition(statement)
+
+#     cond_left = eval_expression(condition_left(cond), table)
+#     cond_right = eval_expression(condition_right(cond), table)
+
+#     if is_condition(cond):
+#         if condition_operator(cond) == '<':
+#             return cond_left < cond_right
+
+#         elif condition_operator(cond) == '>':
+#             return cond_left > cond_right
+
+#         elif condition_operator(cond) == '=':
+#             return cond_left == cond_right 
+
+#         else:
+#             return False
+
+
 def eval_condition(statement, table):
     cond = selection_condition(statement)
 
     cond_left = eval_expression(condition_left(cond), table)
     cond_right = eval_expression(condition_right(cond), table)
 
+    condopers = {'<': lambda x, y: x < y, '>': lambda x, y: x > y, '=': lambda x, y: x == y}
+
     if is_condition(cond):
-        if condition_operator(cond) == '<':
-            return cond_left < cond_right
+        if condition_operator(cond) in condopers:
+            return condopers[condition_operator(cond)](cond_left, cond_right)
 
-        elif condition_operator(cond) == '>':
-            return cond_left > cond_right
-
-        elif condition_operator(cond) == '=':
-            return cond_left == cond_right 
-
-        else:
-            return False
 
 
 def eval_binaryoper(b, table):
@@ -129,14 +143,35 @@ def eval_binaryoper(b, table):
     #return table
 
 
+# def eval_binaryoper(b, table):
+
+#     biny_left = eval_expression(binaryexpr_left(b), table)
+#     biny_right = eval_expression(binaryexpr_right(b), table)
+
+#     op = ['+', '-', '*', '/']
+    
+#     if binaryexpr_operator(b) in op:
+#         return eval(f'{biny_left} {binaryexpr_operator(b)} {biny_right}')
+
+
+# def eval_binaryoper(b, table):
+#     biny_left = eval_expression(binaryexpr_left(b), table)
+#     biny_right = eval_expression(binaryexpr_right(b), table)
+
+#     op = {'+': lambda x, y: x + y, '-': lambda x, y: x - y, '*': lambda x, y: x * y, '/': lambda x, y: x / y}
+
+#     if binaryexpr_operator(b) in op:
+#         return op[binaryexpr_operator(b)](biny_left, biny_right)
+
+
 def eval_variable(v, table):
     return table[v]
 
 
 # --- Correct statements ---
-calc_set_print = ['calc', ["set", "res", 5], ['print', 2], ['print', [4, "+", [2, "*", 2]]], ["print", "res"]]
+calc_set_print = ['calc', ["set", "res", 5], ['print', 2], ['print', [4, "+", [2, "/", 2]]], ["print", "res"]]
 
-calc2_if_set = ['calc', ['if', [[3, "+", 2], '=', 5], ['set', 'a', 5], ["print", 2]], ['print', 'a']]
+calc_if = ['calc', ['if', [[3, "+", ], '=', 6], ['print', True], ["print", False]]]
 
 calc_read_print = ['calc', ['read', 'n'], ['print', 'n']]
 
@@ -147,5 +182,5 @@ calc_fib = ['calc', ['read', 'steps'], ['set', 'n', 1], ['set', 'n0', 0], ['whil
 
 # --- Faulty statements ---
 calc_error_binary = ['calc', ['read', 'n'], ['set', 'n', ['n', '%', 2]], ['print', 'n']]
-exec_program(calc_read_print)
 
+exec_program(calc_if)
