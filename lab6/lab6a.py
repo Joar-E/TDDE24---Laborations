@@ -5,7 +5,7 @@ from calc import *
 
 def exec_program(p, table = {}):
     if is_program(p):
-        exec_statements(program_statements(p), table)
+        return exec_statements(program_statements(p), table)
     else:
         print("Is not Calc program")
 
@@ -26,6 +26,8 @@ def eval_expression(statement, table):
         return eval_variable(statement, table)
     elif is_constant(statement):
         return statement
+    else:
+        raise ValueError('Input was wrong')
 
 def eval_statement(s, table):
     if is_assignment(s):
@@ -53,7 +55,7 @@ def exec_assignment(a, table):
 
 
 def exec_repetition(r, table):
-    table = exec_statements(repetition_statements(r), table)
+    table = table.copy()
 
     while eval_condition(r, table):
         table = exec_statements(repetition_statements(r), table)
@@ -70,12 +72,12 @@ def exec_selection(statement, table):
 
 
 def exec_input(i, table):
-    
-    user_input = int(input(f'Enter value for {input_variable(i)}:'))
-    
     table = table.copy()
+    
+    user_input = int(input(f'Enter value for {input_variable(i)}: '))
 
     table[input_variable(i)] = eval_expression(user_input, table)
+    
     return table
 
 
@@ -98,13 +100,13 @@ def eval_condition(statement, table):
 
     if is_condition(cond):
         if condition_operator(cond) == '<':
-            return cond_left < cond_right#eval_expression(selection_true_branch(statement), table)
+            return cond_left < cond_right
 
         elif condition_operator(cond) == '>':
-            return cond_left > cond_right#eval_expression(selection_true_branch(statement), table)
+            return cond_left > cond_right
 
         elif condition_operator(cond) == '=':
-            return cond_left == cond_right#eval_expression(selection_true_branch(statement), table)   
+            return cond_left == cond_right 
 
         else:
             return False
@@ -114,7 +116,7 @@ def eval_binaryoper(b, table):
 
     biny_left = eval_expression(binaryexpr_left(b), table)
     biny_right = eval_expression(binaryexpr_right(b), table)
-
+    
     if binaryexpr_operator(b) == "+":
         return (biny_left + biny_right)
     elif binaryexpr_operator(b) == "-":
@@ -123,21 +125,27 @@ def eval_binaryoper(b, table):
         return (biny_left / biny_right)
     elif binaryexpr_operator(b) == "*":
         return (biny_left * biny_right)
-
-    return table
+    print('Can not compute binaryoperator')
+    #return table
 
 
 def eval_variable(v, table):
     return table[v]
 
 
-# calc1 = ['calc', ["set", "res", 5], ['print', 2], ['print', [4, "+", [2, "*", 2]]], ["print", "res"]]
-# calc2 = ['calc', ['if', [[3, "+", 2], '=', 5], ['set', 'a', 5], ["print", 2]], ['print', 'a']]
-# calc4 = ['calc', ['read', 'p1'],
-#             ['set', 'p2', 47],
-#             ['set', 'p3', 179], ['print', 'p1'], ['print', 'p2'], ['print', 'p3'],
-#             ['set', 'result', [['p1', '*', 'p2'], '-', 'p3']],
-#             ['print', 'result']]
-# calc3 = ['calc', ['read', 'a'], ['set', 'b', 3], ['set', 'c', 1], ['set', 'sum', [['a', '-', 'b'], "-", 'c']], ['print', 'sum']]
-# calc5 = ['calc', ['read', 'n'], ['set', 'sum', 0], ['while', ['n', '>', 0], ['set', 'sum', ['sum', '+', 'n']], ['set', 'n', ['n', '-', 1]]], ['print', 'sum']]
-# exec_program(calc5)
+# --- Correct statements ---
+calc_set_print = ['calc', ["set", "res", 5], ['print', 2], ['print', [4, "+", [2, "*", 2]]], ["print", "res"]]
+
+calc2_if_set = ['calc', ['if', [[3, "+", 2], '=', 5], ['set', 'a', 5], ["print", 2]], ['print', 'a']]
+
+calc_read_print = ['calc', ['read', 'n'], ['print', 'n']]
+
+calc_fac = ['calc', ['read', 'n'], ['set', 'sum', 1], ['while', ['n', '>', 0], ['set', 'sum', ['sum', '*', 'n']], ['set', 'n', ['n', '-', 1]]], ['print', 'sum']]
+
+calc_fib = ['calc', ['read', 'steps'], ['set', 'n', 1], ['set', 'n0', 0], ['while', ['steps', '>', 0], ['set', 'n', ['n', '+', 'n0']], ['set', 'n0', ['n', '-', 'n0']], ['print', 'n'], ['set', 'steps', ['steps', '-', 1]]]]
+
+
+# --- Faulty statements ---
+calc_error_binary = ['calc', ['read', 'n'], ['set', 'n', ['n', '%', 2]], ['print', 'n']]
+exec_program(calc_read_print)
+
