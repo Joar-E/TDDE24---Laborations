@@ -152,4 +152,5 @@ def eval_variable(s, table):
 
 # calc_error_not_calc = ['hej', ['print', 5]]
 
-# exec_program(calc_error_not_calc)
+# exec_program()
+
