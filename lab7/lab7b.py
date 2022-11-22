@@ -59,38 +59,61 @@ def contains_key(search_value, tree):
     return traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn)
     
 
-def tree_size(tree):
-    sum = 0
+# def tree_size(tree):
+#     sum = 0
     
+#     def inner_node_fn(tree, left_branch, right_branch):
+#         nonlocal sum
+#         sum += 1
+#         return sum
+
+#     def leaf_fn(tree):
+#         nonlocal sum
+#         sum += 1
+#         return sum
+
+#     def empty_tree_fn():
+#         return sum
+
+#     return traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn)
+
+def tree_size(tree):
+
     def inner_node_fn(tree, left_branch, right_branch):
-        nonlocal sum
-        sum += 1
-        return sum
+        return 1 + left_branch + right_branch
 
     def leaf_fn(tree):
-        nonlocal sum
-        sum += 1
-        return sum
+        return 1
 
     def empty_tree_fn():
-        return sum
+        return 0
 
     return traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn)
 
+# def tree_depth(tree):
+#     depth = 1
+
+#     def inner_node_fn(tree, left_branch, right_branch):
+#         nonlocal depth
+#         depth += 1
+#         return depth
+
+#     def leaf_fn(tree):
+#         return depth
+
+#     def empty_tree_fn():
+#         return depth
 
 def tree_depth(tree):
-    depth = 1
 
     def inner_node_fn(tree, left_branch, right_branch):
-        nonlocal depth
-        depth += 1
-        return depth
+        return 1 + max(left_branch, right_branch)
 
     def leaf_fn(tree):
-        return depth
+        return 1
 
     def empty_tree_fn():
-        return depth
+        return 0
 
     return traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn)
 
@@ -118,3 +141,11 @@ if __name__ == '__main__':
     print("Tree_size passed all the tests")
 
 #-----------------------------------------------------------------
+
+    """Tests for the tree_depth function"""
+    assert tree_depth(4) == 1
+    assert tree_depth([[], 3, [1, 2, 3]]) == 3
+    assert tree_depth([[[1, 5, 2], 8, 3], 9, [3, 2, 1]]) == 4
+    assert tree_depth([[1, 5, 2], 6, [[[1, 2, 3], 1, 5], 6, 7]]) == 5
+
+    print("Tree_depth has passed all the tests")
