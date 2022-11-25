@@ -7,7 +7,8 @@ def is_leaf(tree):
     return isinstance(tree, int)
 
 def is_inner_node(tree):
-    if len(tree) == 3 and isinstance(left_subtree(tree), (list, int)) and isinstance(right_subtree(tree), (list, int)):
+    if len(tree) == 3 and isinstance(left_subtree(tree), (list, int))\
+                      and isinstance(right_subtree(tree), (list, int)):
         return True
     return False
 
@@ -44,7 +45,7 @@ def traverse(tree, inner_node_fn, leaf_fn, empty_tree_fn):
 def contains_key(search_value, tree):
     
     def inner_node_fn(tree, left_branch, right_branch):
-        if search_value == tree or left_branch or right_branch:#in {tree, left_branch, right_branch}
+        if search_value == tree or left_branch or right_branch:
             return True 
         return False
             
@@ -133,6 +134,7 @@ if __name__ == '__main__':
 #-----------------------------------------------------------------
 
     """Tests for the tree_size function"""
+    assert tree_size(3) == 1
     assert tree_size([1, 3, []]) == 2
     assert tree_size([2, 4, 8]) == 3
     assert tree_size([[1, 2, []], 3, []]) == 3

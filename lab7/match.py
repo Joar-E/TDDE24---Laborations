@@ -16,6 +16,8 @@ def match(seq, pattern):
         else:
             return match(seq[1:], pattern)
 
+    
+
     elif not seq:
         return False
 
@@ -23,7 +25,16 @@ def match(seq, pattern):
         return match(seq[1:], pattern[1:])
 
     elif seq[0] == pattern[0]:
-        return match(seq[1:], pattern[1:])
+        if len(seq) == 1:
+            return True
+        else:
+            return match(seq[1:], pattern[1:])
 
+    elif isinstance(pattern[0], list):
+        if isinstance(seq[0], list):
+            if match(seq[0], pattern[0]) and match(seq[1:], pattern[1:]):
+                return True
+        else:
+            return False
     else:
         return False
