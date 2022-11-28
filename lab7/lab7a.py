@@ -57,12 +57,12 @@ def search(pattern, seq):
                                  # the result of searching the rest of 
                                  # sequence
         print("hej2")
-        return [seq[0]] + search(pattern, seq[1:])
+        return [seq[0]] + search(pattern[1:], seq[1:])
 
     else: # If the first element is not a match, search the rest
           # of the sequence
         print("hej3")
-        return search(pattern, seq[1:])
+        return search(pattern[1:], seq[1:])
 
 
 # def search(pattern, seq):
@@ -74,8 +74,8 @@ def search(pattern, seq):
 
 #print(search(db, ['--', ['titel', ['&', '&']], '--']))
 
-#print(search([['författare', ['&', 'zelle']],
-#                    ['titel', ['--', 'python', '--']], ['år', '&']], db))
+print(search([['författare', ['&', 'zelle']],
+                   ['titel', ['--', 'python', '--']], ['år', '&']], db))
 # print(search(db, ['--', ['år', 2042], '--']))
 #    == [['författare', ['anders', 'haraldsson']],
 #       ['titel', ['programmering', 'i', 'lisp']],
