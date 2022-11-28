@@ -83,17 +83,10 @@ def match(seq, pattern):
 #                                  # sequence
 #         return [seq[0]] + search(pattern, seq[1:])
 
-    # if match(seq[0], pattern): # If the first element is a match
-    #                              # return that element together with
-    #                              # the result of searching the rest of 
-    #                              # sequence
-    #     print("hej2")
-    #     return [seq[0]] + search(pattern, seq[1:])
-
-    # else: # If the first element is not a match, search the rest
-    #       # of the sequence
-    #     print("hej3")
-    #     return search(pattern, seq[1:])
+#     else: # If the first element is not a match, search the rest
+#           # of the sequence
+#         print("hej3")
+#         return search(pattern, seq[1:])
 
 def search(pattern, seq):
     # result = []
