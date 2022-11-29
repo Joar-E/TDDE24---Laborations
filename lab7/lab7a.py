@@ -24,14 +24,7 @@ def match(seq, pattern):
     """
     Returns whether given sequence matches the given pattern
     """
-    # try:
-    #     print(seq[0])
-    # except:
-    #     print("Mupp sekvens:" , seq)
-    # try:
-    #     print(pattern[0])
-    # except:
-    #     print("Muppmönster:", pattern)
+
     if not pattern:
         return not seq
         
@@ -96,44 +89,29 @@ def search(pattern, seq):
     return [i for i in seq if match(i,pattern)]
     # return result
 
-#print(search(db, ['--', ['titel', ['&', '&']], '--']))
 
-#print(search([['författare', ['&', 'zelle']],
-#                    ['titel', ['--', 'python', '--']], ['år', '&']], db))
-# print(search(db, ['--', ['år', 2042], '--']))
-#    == [['författare', ['anders', 'haraldsson']],
-#       ['titel', ['programmering', 'i', 'lisp']],
-#       ['år', 1993]]
-
+print()
 if __name__ == "__main__":
-    assert search(['--', ['titel', ['&', '&']], '--'], db) == [[['författare', ['armen', 'asratian']], ['titel', ['diskret', 'matematik']], ['år', 2012]]]
-    assert search(['--', ['ar', 2042], '--'], db) == []
-    assert search([['författare', ['&', 'zelle']], ['titel', ['--', 'python', '--']], ['år', '&']], db) == [[['författare', ['john', 'zelle']],
-    ['titel',
-    ['python',
-    'programming',
-    'an',
-    'introduction',
-    'to',
-    'computer',
-    'science']],
-    ['år', 2010]],
-    [['författare', ['john', 'zelle']],
-    ['titel',
-    ['data',
-    'structures',
-    'and',
-    'algorithms',
-    'using',
-    'python',
-    'and',
-    'c++']],
-    ['år', 2009]]]
-    
-    assert search(['--'], [['hej', 'då'], ['då', 'hej']]) == [['hej', 'då'], ['då', 'hej']] #Vid '--' matchar båda huvudelementen
-    assert search(['hej', '&', 'då'], db) == [] # Pattern doesnt match seq
-    assert search([], db) == [] # If pattern is empty
-    assert search([], []) == [] # If seq and pattern is empty
-    assert search(['hej'], []) == [] # If seq is empty
-    assert search(['--', '--', 'a', '&', 'b', '--'], ['a.b']) # Checking that all symbols work
-    print("Search has passed all tests")
+    assert search([['författare', ['--']], ['titel', ['--', 'python', '--']], ['år', '&']], db) ==\
+        [[['författare', ['john', 'zelle']], 
+        ['titel', ['python', 'programming', 'an', 'introduction', 'to', 'computer', 'science']],
+        ['år', 2010]], [['författare', ['john', 'zelle']],
+        ['titel', ['data', 'structures', 'and', 'algorithms', 'using', 'python', 'and', 'c++']],
+        ['år', 2009]]]
+
+    assert search([['författare', '--'], '--'], db) == db
+
+    assert search(['--', ['&', ['diskret', 'matematik']], '--'], db) ==\
+        [[['författare', ['armen', 'asratian']], \
+            ['titel', ['diskret', 'matematik']], \
+                ['år', 2012]]]
+
+    assert search(['--', ['år', 2009], '--'], db) ==\
+        [[['författare', ['john', 'zelle']],
+       ['titel', ['data', 'structures', 'and', 'algorithms', 'using',
+                  'python', 'and', 'c++']],
+       ['år', 2009]]]
+
+    assert search([], db) == []
+
+    print('The search function has passed all tests!')
