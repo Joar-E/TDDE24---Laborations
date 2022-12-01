@@ -1,5 +1,3 @@
-#from match import *
-#from books import db
 
 db = [[['författare', ['john', 'zelle']],
        ['titel', ['python', 'programming', 'an', 'introduction', 'to',
@@ -40,7 +38,6 @@ def match(seq, pattern):
             return match(seq[1:], pattern)
 
     
-
     elif not seq:
         return False
 
@@ -63,34 +60,13 @@ def match(seq, pattern):
         return False
 
 
-# def search(pattern, seq):
-#     """An expanded version of the match function
-#     which can search with nested patterns"""
-
-#     if not seq: # If the sequence is empty return an empty list
-#         return []
-
-#     if match(seq[0], pattern): # If the first element is a match
-#                                  # return that element together with
-#                                  # the result of searching the rest of 
-#                                  # sequence
-#         return [seq[0]] + search(pattern, seq[1:])
-
-#     else: # If the first element is not a match, search the rest
-#           # of the sequence
-#         print("hej3")
-#         return search(pattern, seq[1:])
-
 def search(pattern, seq):
-    # result = []
-    # for element in seq:
-    #     if match(element, pattern):
-    #         result.append(element)
-    return [i for i in seq if match(i,pattern)]
-    # return result
+    """Returns a list of all matched parts of the given sequence"""
+    
+    return [i for i in seq if match(i, pattern)]
 
 
-print()
+
 if __name__ == "__main__":
     assert search([['författare', ['--']], ['titel', ['--', 'python', '--']], ['år', '&']], db) ==\
         [[['författare', ['john', 'zelle']], 
