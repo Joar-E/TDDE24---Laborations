@@ -40,7 +40,7 @@ def ts_overlapping_part(ts1: TimeSpan, ts2: TimeSpan) -> TimeSpan:
         hour_number(time_hour(ts_end(ts1))) * 60 + minute_number(time_minute(ts_end(ts1))),  #
         hour_number(time_hour(ts_end(ts2))) * 60 + minute_number(time_minute(ts_end(ts2))),
     )
-    return TimeSpan(dict(start = Time(Hour(min1 // 60), Minute(min1 % 60)), end = Time(Hour(min2 // 60), Minute(min2 % 60))))
+    return new_time_span(Time(Hour(min1 // 60), Minute(min1 % 60)), Time(Hour(min2 // 60), Minute(min2 % 60)))#TimeSpan(Time(Hour(min1 // 60), Minute(min1 % 60)), Time(Hour(min2 // 60), Minute(min2 % 60)))
 
 
 def ts_duration(ts: TimeSpan) -> "Duration":
@@ -53,7 +53,7 @@ def ts_duration(ts: TimeSpan) -> "Duration":
             hour_number(time_hour(ts_end(ts))) * 60 + minute_number(time_minute(ts_end(ts))) -
             hour_number(time_hour(ts_start(ts))) * 60 - minute_number(time_minute(ts_start(ts)))
     )
-    return Duration(Hour(mins // 60), Minute(mins % 60))
+    return new_duration(Hour(mins//60), Minute(mins%60))
 
 
 def duration_is_longer_or_equal(d1: Duration, d2: Duration):
@@ -64,10 +64,10 @@ def duration_is_longer_or_equal(d1: Duration, d2: Duration):
     ensure_type(d1, Duration)
     ensure_type(d2, Duration)
 
-    hours1 = d1.hour.number
-    hours2 = d2.hour.number
-    mins1 = d1.minute.number
-    mins2 = d2.minute.number
+    hours1 = hour_number(duration_hour(d1))
+    hours2 = hour_number(duration_hour(d2))
+    mins1 = minute_number(duration_minute(d1))
+    mins2 = minute_number(duration_minute(d2))
 
     return (hours1, mins1) >= (hours2, mins2)
 
@@ -80,10 +80,10 @@ def duration_equals(d1: Duration, d2: Duration):
     ensure_type(d1, Duration)
     ensure_type(d2, Duration)
 
-    hours1 = d1.hour.number
-    hours2 = d2.hour.number
-    mins1 = d1.minute.number
-    mins2 = d2.minute.number
+    hours1 = hour_number(duration_hour(d1))
+    hours2 = hour_number(duration_hour(d2))
+    mins1 = minute_number(duration_minute(d1))
+    mins2 = minute_number(duration_minute(d2))
 
     return (hours1, mins1) == (hours2, mins2)
 
