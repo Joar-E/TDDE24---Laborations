@@ -5,7 +5,7 @@ from cal_output import *
 # =========================================================================
 
 # Define the type somehow...  The initial "" is simply here as a placeholder.
-TimeSpanSeq = NamedTuple("TimeSpanSeq", [("timespans", List[TimeSpan])])
+TimeSpanSeq = NamedTuple("TimeSpanSeq", [("timespans", TimeSpan)])
 
 # =========================================================================
 #  Function implementations
@@ -13,7 +13,10 @@ TimeSpanSeq = NamedTuple("TimeSpanSeq", [("timespans", List[TimeSpan])])
 
 # Implement these functions!  Also determine if you need *additional* functions.
 
-def new_time_span_seq(timespans: List[TimeSpan] = None):
+def new_time_span_seq(timespans: TimeSpan = None):
+    """ Returns a new TimeSpanSeq but if no argument is givin 
+        it returns an empty list
+    """
     if timespans is None:
         timespans = []
     else:
@@ -21,48 +24,47 @@ def new_time_span_seq(timespans: List[TimeSpan] = None):
     return TimeSpanSeq(timespans)
 
 
-def tss_is_empty(tss: TimeSpanSeq):
+def tss_is_empty(tss: TimeSpanSeq) -> bool:
+    """ Returns True if tss is empty"""
     ensure_type(tss, TimeSpanSeq)
     return not tss.timespans
 
 
 def tss_plus_span(tss: TimeSpanSeq, ts: TimeSpan):
-
+    """ Creates a copy of the given TimeSpanSeq and returns it 
+        with the added timepan"""
     ensure_type(tss, TimeSpanSeq)
     ensure_type(ts, TimeSpan)
 
-    def add_ts(tss, ts):
-        if not tss or isinstance(tss, TimeSpanSeq) and tss_is_empty(tss): #time_precedes(#ts_start(app_span(app)), ts_start(app_span(appointments[0])):
-            return [ts]
-        
-        elif time_precedes(ts_start(ts), ts_start(tss[0][0])):
-            print("jgfhdjhgdfhbjhfdbvhfdhvhdhbhvdfbh")        
-            return [ts] + tss[0]
+    def add_ts(tss: TimeSpanSeq, ts: TimeSpan):
+        """ If the given timespan precedes the earliest timespan in the tss
+            it is placed in the first position of the tss 
+        """
+        if not tss or tss_is_empty(tss) or time_precedes(
+            ts_start(ts), ts_start(tss.timespans[0])):
+
+            return [ts] + tss.timespans #tss.timespans == tss[0] 
+ 
         else:
-            print("hej")
-            print(tss)
-            print(tss[0][0])
-            print(tss[1:])
-            return tss[0] + add_ts(tss[1:], ts)
+            # tss.timespans[0] == tss[0][0]
+            """ Otherwise it is pu through the same function again but with the rest of
+                the tss
+            """
+            return [tss.timespans[0]] + add_ts(new_time_span_seq(tss.timespans[1:]), ts)
 
     return new_time_span_seq(add_ts(tss, ts))
-    # if tss_is_empty(tss):
-    #     return [ts]
 
-    # elif time_precedes(ts_start(ts), ts_start(tss_iter_spans(tss))):
-    #     return TimeSpanSeq
-
-    # else:
-    #     position += 1
 
 def tss_iter_spans(tss: TimeSpanSeq):
+    """ Iterates through the tss"""
     ensure_type(tss, TimeSpanSeq)
-    for timespan in TimeSpanSeq.timespans:
+    for timespan in tss.timespans:
         yield timespan
 
 
 def show_time_spans(tss: TimeSpanSeq):
-    for timespan in tss.timespans:
+    """ Iterates through the tss and shows all the TimeSpans """
+    for timespan in tss.timespans: #tss_iter_spans(tss):
         show_ts(timespan)
         print()
 
