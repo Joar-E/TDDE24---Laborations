@@ -43,11 +43,10 @@ def tss_plus_span(tss: TimeSpanSeq, ts: TimeSpan):
         if not tss or tss_is_empty(tss) or time_precedes(
             ts_start(ts), ts_start(tss.timespans[0])):
 
-            return [ts] + tss.timespans #tss.timespans == tss[0] 
+            return [ts] + tss.timespans
  
         else:
-            # tss.timespans[0] == tss[0][0]
-            """ Otherwise it is pu through the same function again but with the rest of
+            """ Otherwise it is put through the same function again but with the rest of
                 the tss
             """
             return [tss.timespans[0]] + add_ts(new_time_span_seq(tss.timespans[1:]), ts)
