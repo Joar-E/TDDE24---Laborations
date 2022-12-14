@@ -17,4 +17,10 @@ else:
 
 
 def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
-    pass
+    time_spans_seq = new_time_span_seq()
+
+    for appointment in cd_iter_appointments(cal_day):
+        tss_plus_span(time_spans_seq, app_span(appointment))
+    
+    
+

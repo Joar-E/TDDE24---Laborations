@@ -14,8 +14,9 @@ TimeSpanSeq = NamedTuple("TimeSpanSeq", [("timespans", TimeSpan)])
 # Implement these functions!  Also determine if you need *additional* functions.
 
 def new_time_span_seq(timespans: TimeSpan = None):
-    """ Returns a new TimeSpanSeq but if no argument is givin 
-        it returns an empty list
+    """ 
+    Returns a new TimeSpanSeq but if no argument is givin 
+    it returns an empty list
     """
     if timespans is None:
         timespans = []
@@ -31,14 +32,17 @@ def tss_is_empty(tss: TimeSpanSeq) -> bool:
 
 
 def tss_plus_span(tss: TimeSpanSeq, ts: TimeSpan):
-    """ Creates a copy of the given TimeSpanSeq and returns it 
-        with the added timepan"""
+    """ 
+    Creates a copy of the given TimeSpanSeq and returns it 
+    with the added timepan
+    """
     ensure_type(tss, TimeSpanSeq)
     ensure_type(ts, TimeSpan)
 
     def add_ts(tss: TimeSpanSeq, ts: TimeSpan):
-        """ If the given timespan precedes the earliest timespan in the tss
-            it is placed in the first position of the tss 
+        """
+        If the given timespan precedes the earliest timespan in the tss
+        it is placed in the first position of the tss 
         """
         if not tss or tss_is_empty(tss) or time_precedes(
             ts_start(ts), ts_start(tss.timespans[0])):
@@ -46,8 +50,9 @@ def tss_plus_span(tss: TimeSpanSeq, ts: TimeSpan):
             return [ts] + tss.timespans
  
         else:
-            """ Otherwise it is put through the same function again but with the rest of
-                the tss
+            """ 
+            Otherwise it is put through the same function again but with the rest of
+            the tss
             """
             return [tss.timespans[0]] + add_ts(new_time_span_seq(tss.timespans[1:]), ts)
 
@@ -63,7 +68,7 @@ def tss_iter_spans(tss: TimeSpanSeq):
 
 def show_time_spans(tss: TimeSpanSeq):
     """ Iterates through the tss and shows all the TimeSpans """
-    for timespan in tss.timespans: #tss_iter_spans(tss):
+    for timespan in tss_iter_spans(tss):
         show_ts(timespan)
         print()
 
