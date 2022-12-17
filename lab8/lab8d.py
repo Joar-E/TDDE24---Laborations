@@ -1,6 +1,7 @@
 # Write your code for lab 8d here.
 from cal_abstraction import CalendarDay, Time
 from settings import CHECK_AGAINST_FACIT
+from cal_ui import *
 
 if CHECK_AGAINST_FACIT:
     try:
@@ -14,6 +15,23 @@ if CHECK_AGAINST_FACIT:
         raise
 else:
     from lab8b import *
+
+
+def show_free(cal_name: str, day: int, month: str, start: str, end: str):
+    day = new_day(day)
+    month = new_month(month)
+    start_time = new_time_from_string(start)
+    end_time = new_time_from_string(end)
+
+    cal_year = get_calendar(cal_name)
+    cal_month = cy_get_month(month, cal_year)
+    cal_day = cm_get_day(cal_month, day)
+
+    if cd_is_empty(cal_day):
+        print("There are no appointments booked for this day")
+    
+    show_time_spans(free_spans(cal_day, start_time, end_time))
+
 
 
 def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
@@ -59,7 +77,7 @@ def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
                 starting_point = time_span_end
                 pass
     
-    
+
     if time_precedes(starting_point, end):
         free_time = tss_plus_span(free_time, new_time_span(starting_point, end))
     
