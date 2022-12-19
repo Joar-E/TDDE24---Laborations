@@ -57,7 +57,7 @@ def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
         if time_precedes_or_equals(time_span_start, starting_point):
             # The timespan is out of the time interval
             if time_precedes(time_span_end, starting_point):
-                pass
+                continue
             # The end of timespan is within the interval 
             if time_precedes_or_equals(time_span_end, end):
                 starting_point = time_span_end
