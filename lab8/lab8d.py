@@ -18,6 +18,9 @@ else:
 
 
 def show_free(cal_name: str, day: int, month: str, start: str, end: str):
+    """
+    Makes a copy of the given day and shows all available time
+    """
     day = new_day(day)
     month = new_month(month)
     start_time = new_time_from_string(start)
@@ -35,6 +38,10 @@ def show_free(cal_name: str, day: int, month: str, start: str, end: str):
 
 
 def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
+    """
+    Returns a TimeSpanSeq with all non-booked timespans during the given
+    interval
+    """
     app_spans_seq = new_time_span_seq()
 
     for appointment in cd_iter_appointments(cal_day):
@@ -59,9 +66,9 @@ def free_spans(cal_day: CalendarDay, start: Time, end: Time) -> TimeSpanSeq:
             if time_precedes_or_equals(end, time_span_end):
                 starting_point = time_span_end
                 break
-            if time_precedes_or_equals(starting_point, time_span_end):
-                starting_point = time_span_end
-                pass
+            # if time_precedes_or_equals(starting_point, time_span_end):
+            #     starting_point = time_span_end
+            #     pass
         
         elif time_precedes(starting_point, time_span_start):
             if time_precedes_or_equals(end, time_span_start):

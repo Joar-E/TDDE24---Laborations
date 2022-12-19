@@ -12,14 +12,14 @@ def cd_remove_appointment(day: CalendarDay, start_time: Time):
     appointments = []
 
     if cd_is_empty(day):
-        print("There was no appointment at the given time")
+        print("There was no appointment at the given day")
         return []
 
     else:
         for appointment in cd_iter_appointments(day):
             if start_time != ts_start(app_span(appointment)):
                 appointments.append(appointment)
-    
+           
     print("Appointment has been removed.")
     return appointments
 
@@ -48,14 +48,41 @@ def remove(cal_name: str, day: int, month: str, time: str):
 
 if __name__ == "__main__":
 
-    create("Jayne")
-    book("Jayne", 20, "sep", "12:00", "14:00", "Rob train")
-    book("Jayne", 20, "sep", "15:00", "16:00", "Escape with loot")
+    create("Bob")
+    book("Bob", 22, "sep", "12:00", "13:00", "Lunch")
+    book("Bob", 22, "sep", "10:00", "12:00", "Business Meeting")
+    book("Bob", 10, "nov", "09:00", "15:00", "Business Conference")
+    book("Bob", 10, "nov", "19:00", "22:00", "Dinner with wife")
 
-    remove("Jayne", 20, "sep", "15:00")
-    book("Jayne", 20, "sep", "15:00", "16:00", "Return loot")
-    show("Jayne", 20, "sep")
+    def test_remove_from_existing_day():
+        remove("Bob", 22, 'sep', "12:00")
+        remove("Bob", 10, 'nov', "09:00")
 
-    remove("Jayne", 20, "sep", "09:00")
-    show("Jayne", 20, "sep")
-    remove("Jayne", 21, "aug", "13:00")
+        show("Bob", 22, "sep")
+        show("Bob", 10, "nov")
+    
+    def test_remove_from_nonexisting_app():
+        remove("Bob", 22, 'sep', "13:00")
+        remove("Bob", 10, 'nov', "23:00")
+        remove("Bob", 10, 'nov', "12:00")
+
+        remove("Bob", 15, "jan", "14:00")
+        remove("Bob", 30, "apr", "22:00")
+
+        show("Bob", 22, "sep")
+        show("Bob", 10, "nov")
+    
+    def test_edge_cases():
+        remove("David", 22, "sep", "10:00") # Should raise a ValueError
+        remove("Bob", 10, "nov", "25:00")   # Should raise an AssertionError
+        remove("Bob", 35, "dec", "10:00")   # Should raise an AssertionError
+
+        show("Bob", 22, "sep")
+        show("Bob", 10, "nov")
+    
+
+    #test_remove_from_existing_day()
+    #test_remove_from_nonexisting_app()
+    test_edge_cases()
+
+    
