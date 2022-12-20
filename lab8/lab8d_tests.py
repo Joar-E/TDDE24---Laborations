@@ -25,7 +25,7 @@ def create_tests_for_free_span() -> dict:
         end_str      = "23:00",
         booking_data = ["10:00-12:00", "13:00-16:00", "20:00-22:00"],
         exp_result   = ["16:00-20:00", "22:00-23:00"]
-    )
+    ) # Test with one booking outside interval and one only starting outside interval
 
     store_test_case(
         test_cases,
@@ -34,7 +34,7 @@ def create_tests_for_free_span() -> dict:
         end_str      = "15:00",
         booking_data = ["11:00-12:30", "15:00-17:00"],
         exp_result   = ["10:00-11:00", "12:30-15:00"]
-    )
+    ) # Test with a booking starting outside interval
 
     store_test_case(
         test_cases,
@@ -43,7 +43,7 @@ def create_tests_for_free_span() -> dict:
         end_str      = "16:00",
         booking_data = ["09:00-17:00"],
         exp_result   = []
-    )
+    ) # Test a booking longer then the interval
 
     store_test_case(
         test_cases,
@@ -52,7 +52,26 @@ def create_tests_for_free_span() -> dict:
         end_str      = "16:00",
         booking_data = ["07:00-10:00", "12:00-13:00", "15:00-17:00"],
         exp_result   = ["10:00-12:00", "13:00-15:00"]
-    )
+    ) # Test where bookings start outside, is inside and end outside
+
+    store_test_case(
+        test_cases,
+        6,
+        start_str = "08:00",
+        end_str = "19:00",
+        booking_data = ["10:00-13:00", "12:00-17:00"], 
+        exp_result= ["08:00-10:00", "17:00-19:00"]
+    ) # Test when two bookings overlap inside the interval
+
+    store_test_case(
+        test_cases,
+        7,
+        start_str = "08:00",
+        end_str = "19:00",
+        booking_data = ["09:00-18:00", "10:00-17:00"], 
+        exp_result= ["08:00-09:00", "18:00-19:00"]
+    ) # Test a booking within another booking
+
 
     # -------- YOUR TEST CASES GO HERE -----------------------
     # For each case, add a brief description of what you want to test.
